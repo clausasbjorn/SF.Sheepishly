@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Service Fabric Tools\Microsoft.VisualStudio.Azure.Fabric.ApplicationProject.props" />
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>3042f0d6-7317-4636-a371-74651c902cbb</ProjectGuid>
+    <ProjectVersion>1.0</ProjectVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="PublishProfiles\Local.xml" />
+    <None Include="Scripts\Deploy-FabricApplication.ps1" />
+    <None Include="Scripts\Update-VersionNumber.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sheepishly.Ingest\Sheepishly.Ingest.csproj" />
+    <ProjectReference Include="..\Sheepishly.Sheep\Sheepishly.Sheep.csproj" />
+    <ProjectReference Include="..\Sheepishly.Tracker\Sheepishly.Tracker.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationPackageRoot\ApplicationManifest.xml" />
+    <Content Include="ApplicationParameters\Cloud.xml" />
+    <Content Include="ApplicationParameters\Local.xml" />
+    <Content Include="PublishProfiles\Cloud.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Service Fabric Tools\Microsoft.VisualStudio.Azure.Fabric.ApplicationProject.targets" />
+</Project>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="SheepishlyType" ApplicationTypeVersion="v1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+   <Parameters>
+      <Parameter Name="SheepActorService_PartitionCount" DefaultValue="10" />
+      <Parameter Name="SheepActorService_MinReplicaSetSize" DefaultValue="2" />
+      <Parameter Name="SheepActorService_TargetReplicaSetSize" DefaultValue="3" />
+      <Parameter Name="Tracker_MinReplicaSetSize" DefaultValue="2" />
+      <Parameter Name="Tracker_PartitionCount" DefaultValue="1" />
+      <Parameter Name="Tracker_TargetReplicaSetSize" DefaultValue="3" />
+      <Parameter Name="Ingest_InstanceCount" DefaultValue="1" />
+   </Parameters>
+   <ServiceManifestImport>
+      <ServiceManifestRef ServiceManifestName="Sheepishly.SheepPkg" ServiceManifestVersion="1.0.0" />
+   </ServiceManifestImport>
+   <ServiceManifestImport>
+      <ServiceManifestRef ServiceManifestName="Sheepishly.TrackerPkg" ServiceManifestVersion="v1.0.0" />
+      <ConfigOverrides />
+   </ServiceManifestImport>
+   <ServiceManifestImport>
+      <ServiceManifestRef ServiceManifestName="Sheepishly.IngestPkg" ServiceManifestVersion="v1.0.0" />
+      <ConfigOverrides />
+   </ServiceManifestImport>
+   <DefaultServices>
+      <Service Name="SheepActorService" GeneratedIdRef="0807c40f-4a76-4142-a7f3-8f96a5d0f9f9|None">
+         <StatefulService ServiceTypeName="SheepActorServiceType" TargetReplicaSetSize="[SheepActorService_TargetReplicaSetSize]" MinReplicaSetSize="[SheepActorService_MinReplicaSetSize]">
+            <UniformInt64Partition PartitionCount="[SheepActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+         </StatefulService>
+      </Service>
+      <Service Name="Tracker">
+         <StatefulService ServiceTypeName="TrackerType" TargetReplicaSetSize="[Tracker_TargetReplicaSetSize]" MinReplicaSetSize="[Tracker_MinReplicaSetSize]">
+            <UniformInt64Partition PartitionCount="[Tracker_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+         </StatefulService>
+      </Service>
+      <Service Name="Ingest">
+         <StatelessService ServiceTypeName="IngestType" InstanceCount="[Ingest_InstanceCount]">
+            <SingletonPartition />
+         </StatelessService>
+      </Service>
+   </DefaultServices>
+</ApplicationManifest>
